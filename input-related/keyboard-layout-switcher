@@ -1,0 +1,24 @@
+#!/usr/bin/bash
+
+VSCODE_LAYOUT="fi_custom"
+DEFAULT_LAYOUT="fi"
+previous_window=""
+
+while true; do
+	current_window=$(xdotool getactivewindow getwindowclassname 2>/dev/null)
+	echo "Current window: $current_window"
+	if [ "$current_window" != "$previous_window" ]; then
+		case "$current_window" in
+			*"code"*|*"Code"*|*"VSCodium"*)
+				setxkbmap $VSCODE_LAYOUT
+				echo "LAYOUT TO VSCODE LAYOUT" 
+				;;
+			*)
+				setxkbmap $DEFAULT_LAYOUT
+				echo "LAYOUT TO DEFAULT LAYOUT"
+				;;
+		esac
+		previous_window="$current_window"
+	fi
+	sleep 1
+done
